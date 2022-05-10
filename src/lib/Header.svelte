@@ -33,7 +33,6 @@
         display: flex;
         justify-content: center;
         border-bottom: 4px solid var(--main-color);
-        background: linear-gradient(rgb(235, 235, 235), white);
     }
     
     .outer_Objects_part {
@@ -49,7 +48,7 @@
         gap: 20px;
         padding: 20px;
         background-color: white;
-        background: linear-gradient(rgb(235, 235, 235), white);
+        background: linear-gradient(rgb(240, 240, 240), white 30%);
     }
     
     .object_thumbnail {
@@ -57,6 +56,13 @@
         aspect-ratio: 1;
         width: 100px;
         height: 100px;
+        transition: 0.5s;
+        cursor: pointer;
     }
+
+    .object_thumbnail:hover {
+        transform: scale(1.1);
+    }
+
 </style>
   

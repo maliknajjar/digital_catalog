@@ -3,13 +3,15 @@
 </script>
   
 <footer>
-    this is the footer
+    <div>object piece navigation control</div>
+    <div>piece propreties control </div>
 </footer>
   
 <style>
     footer {
         display: flex;
-        justify-content: center;
+        flex-direction: column;
+        align-items: center;
         position: absolute;
         bottom: 0;
         width: 100%;
