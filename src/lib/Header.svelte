@@ -54,8 +54,8 @@
     .object_thumbnail {
         background-color: blue;
         aspect-ratio: 1;
-        width: 100px;
-        height: 100px;
+        width: 110px;
+        height: 110px;
         transition: 0.5s;
         cursor: pointer;
     }

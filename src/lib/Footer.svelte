@@ -3,8 +3,12 @@
 </script>
   
 <footer>
-    <div>object piece navigation control</div>
-    <div>piece propreties control </div>
+    <div class="outer_navigation_control">
+        <div class="inner_navigation_control">test</div>
+    </div>
+    <div class="outer_piece_propreties_control">
+        <div class="inner_piece_propreties_control"></div>
+    </div>
 </footer>
   
 <style>
@@ -18,4 +22,3 @@
         background-color: green;
     }
 </style>
-  
