@@ -41,21 +41,20 @@
     }
     
     .inner_Objects_part {
-        /* overflow: auto; */
         overflow: hidden;
         display: flex;
         justify-content: flex-start;
-        gap: 20px;
-        padding: 20px;
-        background-color: white;
-        background: linear-gradient(rgb(240, 240, 240), white 30%);
+        gap: 30px;
+        padding: 25px 25px;
+        background: linear-gradient(rgb(240, 240, 240), white 20%);
     }
     
     .object_thumbnail {
-        background-color: blue;
+        background-color: white;
+        box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.075);
         aspect-ratio: 1;
-        width: 110px;
-        height: 110px;
+        width: 100px;
+        height: 100px;
         transition: 0.5s;
         cursor: pointer;
     }

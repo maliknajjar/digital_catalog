@@ -4,10 +4,12 @@
 
     /* css variables */
     --main-color: #ffc043;
+    --selected-font-color: rgb(78, 78, 78);
+    --unselected-font-color: rgb(167, 167, 167);
 }
 
 body {
     margin: 0;
     padding: 0;
-    background-color: rgb(225, 225, 225);
+    background-color: rgb(220, 220, 220);
 }
