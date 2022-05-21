@@ -27,6 +27,11 @@
 </header>
   
 <style>
+    header {
+        position: absolute;
+        width: 100%;
+    }
+
     .logo_part {
         background-color: white;
         padding: 15px;
