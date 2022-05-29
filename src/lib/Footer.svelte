@@ -5,10 +5,10 @@
 <footer>
     <div class="outer_navigation_control">
         <div class="inner_navigation_control">
-            <div>Test</div>
-            <div>Test</div>
-            <div>Test</div>
-            <div>Test</div>
+            <div>Base cabinets</div>
+            <div>Wall cabinets</div>
+            <div>Worktops</div>
+            <div>Sinks</div>
         </div>
     </div>
     <div class="outer_piece_propreties_control">
