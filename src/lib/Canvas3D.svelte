@@ -12,13 +12,15 @@
     const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
     camera.position.z = 5;
 
-    
-    // adding ambient light
-    const color = 0xFFFFFF;
-    const intensity = 1;
-    const light = new THREE.AmbientLight(color, intensity);
-    scene.add(light);
-    
+    // adding light
+    const pointLight = new THREE.PointLight( 0xffffff, 5, 100 );
+    pointLight.position.set( 2, 2, 2 );
+    scene.add( pointLight );
+
+    const sphereSize = 1;
+    const pointLightHelper = new THREE.PointLightHelper( pointLight, sphereSize );
+    scene.add( pointLightHelper );
+
     // adding the renderer
     const renderer = new THREE.WebGLRenderer();
     renderer.setSize( window.innerWidth, window.innerHeight );
