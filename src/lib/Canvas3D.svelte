@@ -2,9 +2,12 @@
     import * as THREE from 'three';
     import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
+    // instantiating the scene
     const scene = new THREE.Scene();
+    // setting a suitable background color
     scene.background = new THREE.Color( 0xeeeeee );
 
+    // adding the camera to the scene
     const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
     camera.position.z = 5;
     
@@ -14,7 +17,9 @@
 
     const loader = new GLTFLoader();
     loader.load( 'src/3D_Scenes/box_scene.glb', function ( gltf ) {
-        console.log(gltf.scene)
+        const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+        gltf.scene.children[0].material = material
+        console.log(gltf.scene.children[0])
         scene.add( gltf.scene );
     }, undefined, function ( error ) {
         console.error( error );
