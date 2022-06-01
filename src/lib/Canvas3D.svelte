@@ -12,17 +12,20 @@
     const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
     camera.position.z = 5;
 
-    // adding light
-    const pointLight = new THREE.PointLight( 0xffffff, 5, 100 );
+    // adding lights
+    // adding point light
+    const pointLight = new THREE.PointLight( 0xffffff, 2, 100 );
     pointLight.position.set( 2, 2, 2 );
     scene.add( pointLight );
-
     const sphereSize = 1;
     const pointLightHelper = new THREE.PointLightHelper( pointLight, sphereSize );
     scene.add( pointLightHelper );
+    // adding ambient light
+    const light = new THREE.AmbientLight(0xFFFFFF, 0.5);
+    scene.add(light);
 
-    // adding the renderer
-    const renderer = new THREE.WebGLRenderer();
+    // adding the renderer with antialias turned into true
+    const renderer = new THREE.WebGLRenderer({antialias: true});
     renderer.setSize( window.innerWidth, window.innerHeight );
     document.body.appendChild( renderer.domElement );
 

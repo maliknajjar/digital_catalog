@@ -35,7 +35,7 @@
     }
 
     .outer_logo_part {
-        background: radial-gradient(var(--main-color) 60%, rgba(234, 152, 81, 0.07) 100%);
+        background: radial-gradient(var(--main-color-light) 60%, rgba(234, 152, 81, 0.07) 100%);
         padding-bottom: 4px;
 
     }

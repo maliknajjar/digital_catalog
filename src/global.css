@@ -4,6 +4,7 @@
 
     /* css variables */
     --main-color: #ffc043;
+    --main-color-light: #ffd480;
     --selected-font-color: rgb(78, 78, 78);
     --unselected-font-color: rgb(167, 167, 167);
 }
