@@ -31,13 +31,13 @@
     }
     
     .outer_navigation_control {
-        background: radial-gradient(var(--main-color) 25%, rgba(234, 152, 81, 0.07) 125%);
+        background: radial-gradient(var(--main-color) 25%, var(--main-color-very-light) 125%);
         padding: 4px;
         padding-bottom: 0px;
     }
     
     .outer_piece_propreties_control {
-        background: radial-gradient(var(--main-color) 60%, rgba(234, 152, 81, 0.07) 100%);
+        background: radial-gradient(var(--main-color) 60%, var(--main-color-very-light) 100%);
         padding: 4px 0 0 0;
         width: 100%;
     }

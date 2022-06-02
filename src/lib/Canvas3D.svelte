@@ -15,13 +15,13 @@
     // adding lights
     // adding point light
     const pointLight = new THREE.PointLight( 0xffffff, 2, 100 );
-    pointLight.position.set( 2, 2, 2 );
+    pointLight.position.set( 4, 4, 4 );
     scene.add( pointLight );
     const sphereSize = 1;
     const pointLightHelper = new THREE.PointLightHelper( pointLight, sphereSize );
     scene.add( pointLightHelper );
     // adding ambient light
-    const light = new THREE.AmbientLight(0xFFFFFF, 0.5);
+    const light = new THREE.AmbientLight(0xFFFFFF, 2);
     scene.add(light);
 
     // adding the renderer with antialias turned into true
