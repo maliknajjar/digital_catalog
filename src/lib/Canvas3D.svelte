@@ -2,6 +2,7 @@
     import * as THREE from 'three';
     import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
     import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+    import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
 
     // instantiating the scene
     const scene = new THREE.Scene();
@@ -12,7 +13,13 @@
     const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
     camera.position.z = 5;
 
-    // adding lights
+    // adding lights or HDRI
+    //loading the hdri
+    const hdriLoader = new RGBELoader();
+    hdriLoader.load('src/hdris/brown_photostudio_01_1k.hdr', (texture) => {
+        texture.mapping = THREE.EquirectangularReflectionMapping
+        scene.background = texture
+    })
     // adding point light
     const pointLight = new THREE.PointLight( 0xffffff, 5, 100 );
     pointLight.position.set( 4, 4, 4 );
@@ -25,7 +32,10 @@
     scene.add(light);
 
     // adding the renderer with antialias turned into true
-    const renderer = new THREE.WebGLRenderer({antialias: true});
+    const renderer = new THREE.WebGLRenderer({
+        antialias: true,
+        toneMapping: THREE.ACESFilmicToneMapping
+    });
     renderer.setSize( window.innerWidth, window.innerHeight );
     document.body.appendChild( renderer.domElement );
 
