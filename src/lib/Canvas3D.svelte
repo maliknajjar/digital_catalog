@@ -13,25 +13,6 @@
     const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
     camera.position.z = 5;
 
-    // adding lights or HDRI
-    //loading the hdri
-    const hdriLoader = new RGBELoader();
-    hdriLoader.load('src/hdris/brown_photostudio_01_1k.hdr', (texture) => {
-        texture.mapping = THREE.EquirectangularReflectionMapping
-        scene.background = texture
-        scene.environment = texture
-    })
-    // adding point light
-    // const pointLight = new THREE.PointLight( 0xffffff, 5, 100 );
-    // pointLight.position.set( 4, 4, 4 );
-    // scene.add( pointLight );
-    // const sphereSize = 1;
-    // const pointLightHelper = new THREE.PointLightHelper( pointLight, sphereSize );
-    // scene.add( pointLightHelper );
-    // // adding ambient light
-    // const light = new THREE.AmbientLight(0xFFFFFF, 1);
-    // scene.add(light);
-
     // adding the renderer with antialias turned into true
     const renderer = new THREE.WebGLRenderer({
         antialias: true,
@@ -41,10 +22,19 @@
     renderer.toneMappingExposure = 1
     renderer.setSize( window.innerWidth, window.innerHeight );
     document.body.appendChild( renderer.domElement );
-
+    
     // adding orbit controls
     const controls = new OrbitControls( camera, renderer.domElement );
-    
+
+    // adding lights or HDRI
+    //loading the hdri
+    const hdriLoader = new RGBELoader();
+    hdriLoader.load('src/hdris/brown_photostudio_01_1k.hdr', (texture) => {
+        texture.mapping = THREE.EquirectangularReflectionMapping
+        scene.background = texture
+        scene.environment = texture
+    })
+
     // loading a specific 3d scene 
     const loader = new GLTFLoader();
     loader.load( 'src/3D_Scenes/box_scene.glb', function ( gltf ) {
