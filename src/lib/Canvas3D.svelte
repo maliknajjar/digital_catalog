@@ -38,10 +38,14 @@
     // loading a specific 3d scene 
     const loader = new GLTFLoader();
     loader.load( 'src/3D_Scenes/box_scene.glb', function ( gltf ) {
-        // const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-        // gltf.scene.children[0].material = material
-        console.log(gltf.scene.children[0])
-        scene.add( gltf.scene );
+        let children = gltf.scene.children
+        while (true) {
+            scene.add(children[0])      // when using scene.add() the object gets transfered from gltf.scene to the canvas scene (so the length also changes that is why i am using the while loop)
+            if(children[0] == undefined) {
+                console.log("it is done man")
+                break
+            }
+        }
     }, undefined, function ( error ) {
         console.error( error );
     } );
@@ -54,8 +58,6 @@
     animate();
     
 </script>
-  
-<div></div>
   
 <style>
     
