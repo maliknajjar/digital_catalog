@@ -39,10 +39,12 @@
     const loader = new GLTFLoader();
     loader.load( 'src/3D_Scenes/box_scene.glb', function ( gltf ) {
         let children = gltf.scene.children
+        /* when using scene.add() the object gets transfered 
+        from gltf.scene to the canvas scene (so the length 
+        also changes that is why i am using the while loop) */
         while (true) {
-            scene.add(children[0])      // when using scene.add() the object gets transfered from gltf.scene to the canvas scene (so the length also changes that is why i am using the while loop)
+            scene.add(children[0])
             if(children[0] == undefined) {
-                console.log("it is done man")
                 break
             }
         }
