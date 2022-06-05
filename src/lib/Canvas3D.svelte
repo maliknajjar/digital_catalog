@@ -6,6 +6,7 @@
 
     // instantiating the scene
     const scene = new THREE.Scene();
+    let objects
     // setting a suitable background color
     scene.background = new THREE.Color( 0xeeeeee );
 
@@ -13,7 +14,7 @@
     const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
     camera.position.z = 5;
 
-    // adding the renderer with antialias turned into true
+    // adding the renderer with antialias turned into true and adjusting some parameteres for photorealism
     const renderer = new THREE.WebGLRenderer({
         antialias: true,
     });
@@ -35,22 +36,19 @@
         scene.environment = texture
     })
 
-    // loading a specific 3d scene 
+    // loading a specific 3d scene from gltf file
     const loader = new GLTFLoader();
     loader.load( 'src/3D_Scenes/box_scene.glb', function ( gltf ) {
-        let children = gltf.scene.children
-        /* when using scene.add() the object gets transfered 
-        from gltf.scene to the canvas scene (so the length 
-        also changes that is why i am using the while loop) */
-        while (true) {
-            scene.add(children[0])
-            if(children[0] == undefined) {
-                break
-            }
-        }
+        scene.add(gltf.scene)
+        objects = scene.children[0].children
     }, undefined, function ( error ) {
         console.error( error );
     } );
+    
+    // looping through all meshes
+    objects.forEach(object => {
+        console.log(object.name)
+    });
     
     // the animation loop
     function animate() {
