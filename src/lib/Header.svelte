@@ -10,7 +10,7 @@
     </div>
     <div class="outer_Objects_part">
         <div class="inner_Objects_part">
-            <img class="object_thumbnail" alt="scene_image">
+            <img class="scene_thumbnail" alt="scene_image">
         </div>
     </div>
 </header>
@@ -49,9 +49,10 @@
         background: linear-gradient(rgb(240, 240, 240), white 20%);
     }
     
-    .object_thumbnail {
+    .scene_thumbnail {
         background-color: white;
         box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.075);
+        object-fit: cover;
         aspect-ratio: 1;
         width: 100px;
         height: 100px;
@@ -59,7 +60,7 @@
         cursor: pointer;
     }
 
-    .object_thumbnail:hover {
+    .scene_thumbnail:hover {
         transform: scale(1.1);
     }
 

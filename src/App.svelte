@@ -7,7 +7,7 @@
 </script>
 
 <main>
-  <Canvas3D />
   <Header />
+  <Canvas3D />
   <Footer />
 </main>
