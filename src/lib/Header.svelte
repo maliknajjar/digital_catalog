@@ -10,20 +10,7 @@
     </div>
     <div class="outer_Objects_part">
         <div class="inner_Objects_part">
-            <div class="object_thumbnail"></div>
-            <div class="object_thumbnail"></div>
-            <div class="object_thumbnail"></div>
-            <div class="object_thumbnail"></div>
-            <div class="object_thumbnail"></div>
-            <div class="object_thumbnail"></div>
-            <div class="object_thumbnail"></div>
-            <div class="object_thumbnail"></div>
-            <div class="object_thumbnail"></div>
-            <div class="object_thumbnail"></div>
-            <div class="object_thumbnail"></div>
-            <div class="object_thumbnail"></div>
-            <div class="object_thumbnail"></div>
-            <div class="object_thumbnail"></div>
+            <img class="object_thumbnail" alt="scene_image">
         </div>
     </div>
 </header>
