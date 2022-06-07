@@ -58,17 +58,17 @@
 
         // adding orbit controls
         const controls = new OrbitControls( camera, renderer.domElement );
+
+        // taking a picture of the every scene in the app and putting it in the scenes thumbnail
+        THREE.DefaultLoadingManager.onLoad = function ( ) {        // setting up loading managers (this loads only if all objects are finished loading)
+            renderer.render( scene, camera );
+            (<HTMLImageElement>document.querySelector('.scene_thumbnail')).src = renderer.domElement.toDataURL()
+        };
         
         // the animation loop
         function animate() {
             requestAnimationFrame( animate );
             renderer.render( scene, camera );
-        };
-        
-        // setting up loading managers (this loads only if all objects are finished loading)
-        THREE.DefaultLoadingManager.onLoad = function ( ) {
-            animate();
-            (<HTMLImageElement>document.querySelector('.scene_thumbnail')).src = renderer.domElement.toDataURL()
         };
 	});
 </script>
