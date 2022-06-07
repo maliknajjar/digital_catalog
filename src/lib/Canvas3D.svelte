@@ -70,7 +70,6 @@
             requestAnimationFrame( animate );
             renderer.render( scene, camera );
         };
-
         // invoking the animation loop 
         animate()
 	});
