@@ -6,6 +6,9 @@
     import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
     import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
 
+    // params
+    export let setScenesThumbnailImages
+
     // global variables
     let renderer
 
@@ -29,19 +32,6 @@
         scene.background = texture
         scene.environment = texture
     })
-
-    // loading a specific 3d scene from gltf file
-    const loader = new GLTFLoader();
-    loader.load( 'src/3D_Scenes/1.glb', function ( gltf ) {
-        scene.add(gltf.scene)
-        objects = scene.children[0].children
-        // looping through all meshes
-        objects.forEach(object => {
-            console.log(object.name)
-        });
-    }, undefined, function ( error ) {
-        console.error( error );
-    } );
     
     // running this code after the component is mount
     onMount(async () => {
@@ -59,12 +49,39 @@
         // adding orbit controls
         const controls = new OrbitControls( camera, renderer.domElement );
 
+        // loading the first scene to start the loading loop using <DefaultLoadingManager.onLoad> and save it into a global variable
+        const loader = new GLTFLoader();
+        loader.load( `src/3D_Scenes/0.glb`, function ( gltf ) {
+            scene.add(gltf.scene)
+        }, undefined, function ( error ) {
+            console.error( error );
+        } );
+
         // taking a picture of the every scene in the app and putting it in the scenes thumbnail
+        let isActive = true
+        let index = 1
+        let renderImages = []
         THREE.DefaultLoadingManager.onLoad = function ( ) {        // setting up loading managers (this loads only if all objects are finished loading)
+            // rendering scenes and and saving thumbnails
             renderer.render( scene, camera );
-            (<HTMLImageElement>document.querySelector('.scene_thumbnail')).src = renderer.domElement.toDataURL()
+            renderImages.push(renderer.domElement.toDataURL())
+            // load all scenes here
+            if (isActive) {
+                loader.load( `src/3D_Scenes/${index}.glb`, function ( gltf ) {
+                    // making the previous scene NOT visible
+                    scene.children[index - 1].visible = false
+                    console.log(scene)
+                    // adding the scene
+                    scene.add(gltf.scene)
+                    index++
+                }, undefined, function ( error ) {
+                    console.error( error );
+                    isActive = false
+                    // setting thumbnails from saved images
+                    setScenesThumbnailImages(renderImages)
+                } );
+            }
         };
-        
         // the animation loop
         function animate() {
             requestAnimationFrame( animate );

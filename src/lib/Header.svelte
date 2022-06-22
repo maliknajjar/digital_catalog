@@ -1,5 +1,11 @@
 <script lang="ts">
+    import { onMount } from "svelte";
     import mahmoud_logo from "../assets/mahmoud_logo.png"
+
+    export let images = [
+        "dsdsd",
+        "dsdsd",
+    ]
 </script>
   
 <header>
@@ -10,7 +16,9 @@
     </div>
     <div class="outer_Objects_part">
         <div class="inner_Objects_part">
-            <img class="scene_thumbnail" alt="scene_image">
+            {#each images as imageURL}
+                <img class="scene_thumbnail" alt="scene_image" src={imageURL}>
+            {/each}
         </div>
     </div>
 </header>
