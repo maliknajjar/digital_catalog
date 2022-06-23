@@ -96,7 +96,7 @@
         animate()
 	});
 
-    // when the active scene global store changes this will happend
+    // changing the scene when the activeScene variable changes
     activeScene.subscribe(activeScene => {
         scene.children.forEach((scene, i) => {
             if(i == activeScene) { scene.visible = true; return} 
