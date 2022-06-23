@@ -1,14 +1,11 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-    import { activeScene } from "./stores"
+    import { activeScene, sceneThumbnails } from "./stores"
 
     import * as THREE from 'three';
     import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
     import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
     import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
-
-    // params
-    export let setScenesThumbnailImages
 
     // global variables
     let renderer
@@ -50,6 +47,11 @@
         // adding orbit controls
         const controls = new OrbitControls( camera, renderer.domElement );
 
+        // taking a picture of the every scene in the app and putting it in the scenes thumbnail
+        let isActive = true
+        let index = 1
+        let renderImages = []
+
         // loading the first scene to start the loading loop using <DefaultLoadingManager.onLoad> and save it into a global variable
         const loader = new GLTFLoader();
         loader.load( `src/3D_Scenes/0.glb`, function ( gltf ) {
@@ -58,14 +60,13 @@
             console.error( error );
         } );
 
-        // taking a picture of the every scene in the app and putting it in the scenes thumbnail
-        let isActive = true
-        let index = 1
-        let renderImages = []
-        THREE.DefaultLoadingManager.onLoad = function ( ) {        // setting up loading managers (this loads only if all objects are finished loading)
+        // setting up loading managers (this loads only if all objects are finished loading)
+        THREE.DefaultLoadingManager.onLoad = function ( ) {
             // rendering scenes and and saving thumbnails
-            renderer.render( scene, camera );
-            renderImages.push(renderer.domElement.toDataURL())
+            if(isActive) {
+                renderer.render( scene, camera );
+                renderImages.push(renderer.domElement.toDataURL())
+            }
             // load all scenes here
             if (isActive) {
                 loader.load( `src/3D_Scenes/${index}.glb`, function ( gltf ) {
@@ -78,7 +79,7 @@
                     console.error( error );
                     isActive = false
                     // setting thumbnails from saved images
-                    setScenesThumbnailImages(renderImages)
+                    sceneThumbnails.set(renderImages)
                     // setting the first scene to be the active scene
                     scene.children.forEach((scene, i) => {
                         if(i == 0) { scene.visible = true; return } 

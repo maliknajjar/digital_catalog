@@ -1,12 +1,22 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import { activeScene } from "./stores"
+    import { activeScene, sceneThumbnails } from "./stores"
     import mahmoud_logo from "../assets/mahmoud_logo.png"
 
     export let images = []
+    let scaledThumbnailIndex = 0
 
+    // running this function when the sceneThumbnails global variable changes
+    sceneThumbnails.subscribe(value => {
+        console.log("wooow")
+        console.log(value)
+        images  = value
+    })
+
+    // the function that changs the scene when clicking on a scene thumbnail
     function changeActiveScene(sceneIndex) {
         activeScene.set(sceneIndex)
+        scaledThumbnailIndex = sceneIndex
     }
 </script>
   
@@ -19,7 +29,7 @@
     <div class="outer_Objects_part">
         <div class="inner_Objects_part">
             {#each images as imageURL, i}
-                <img class="scene_thumbnail" alt="scene_image" src={imageURL} on:click={ () => changeActiveScene(i) }>
+                <img class="scene_thumbnail {i == scaledThumbnailIndex ? "active" : ""}" alt="scene_image" src={imageURL} on:click={ () => changeActiveScene(i) }>
             {/each}
         </div>
     </div>
@@ -71,6 +81,10 @@
     }
 
     .scene_thumbnail:hover {
+        transform: scale(1.1);
+    }
+
+    .active {
         transform: scale(1.1);
     }
 
