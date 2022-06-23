@@ -1,5 +1,6 @@
 <script lang="ts">
     import { onMount } from 'svelte';
+    import { activeScene } from "./stores"
 
     import * as THREE from 'three';
     import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
@@ -70,7 +71,6 @@
                 loader.load( `src/3D_Scenes/${index}.glb`, function ( gltf ) {
                     // making the previous scene NOT visible
                     scene.children[index - 1].visible = false
-                    console.log(scene)
                     // adding the scene
                     scene.add(gltf.scene)
                     index++
@@ -79,6 +79,11 @@
                     isActive = false
                     // setting thumbnails from saved images
                     setScenesThumbnailImages(renderImages)
+                    // setting the first scene to be the active scene
+                    scene.children.forEach((scene, i) => {
+                        if(i == 0) { scene.visible = true; return } 
+                        scene.visible = false
+                    });
                 } );
             }
         };
@@ -90,6 +95,14 @@
         // invoking the animation loop 
         animate()
 	});
+
+    // when the active scene global store changes this will happend
+    activeScene.subscribe(activeScene => {
+        scene.children.forEach((scene, i) => {
+            if(i == activeScene) { scene.visible = true; return} 
+            scene.visible = false
+        });
+    })
 </script>
 
 <canvas class="mainCanvas"></canvas>

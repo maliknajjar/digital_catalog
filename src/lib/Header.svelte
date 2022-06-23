@@ -1,11 +1,13 @@
 <script lang="ts">
     import { onMount } from "svelte";
+    import { activeScene } from "./stores"
     import mahmoud_logo from "../assets/mahmoud_logo.png"
 
-    export let images = [
-        "dsdsd",
-        "dsdsd",
-    ]
+    export let images = []
+
+    function changeActiveScene(sceneIndex) {
+        activeScene.set(sceneIndex)
+    }
 </script>
   
 <header>
@@ -16,8 +18,8 @@
     </div>
     <div class="outer_Objects_part">
         <div class="inner_Objects_part">
-            {#each images as imageURL}
-                <img class="scene_thumbnail" alt="scene_image" src={imageURL}>
+            {#each images as imageURL, i}
+                <img class="scene_thumbnail" alt="scene_image" src={imageURL} on:click={ () => changeActiveScene(i) }>
             {/each}
         </div>
     </div>
@@ -30,7 +32,7 @@
     }
 
     .outer_logo_part {
-        background: radial-gradient(var(--main-color-light) 60%, var(--main-color-very-light) 100%);
+        background: radial-gradient(var(--main-color) 60%, var(--main-color-very-light) 100%);
         padding-bottom: 4px;
 
     }
