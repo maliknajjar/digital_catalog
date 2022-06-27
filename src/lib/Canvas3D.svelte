@@ -58,7 +58,7 @@
         loader.load( `src/3D_Scenes/0.glb`, function ( gltf ) {
             scene.add(gltf.scene)
             // fitting camera to view
-            fitCameraToObjects(camera, controls, [scene.children[0].children[2]], 1.5)
+            fitCameraToObjects(camera, controls, scene.children[0].children, 1.5)
         }, undefined, function ( error ) {
             console.error( error );
         } );
@@ -78,7 +78,7 @@
                     // adding the scene
                     scene.add(gltf.scene)
                     // fitting camera to view
-                    fitCameraToObjects(camera, controls, [scene.children[index].children[2]], 1.5)
+                    fitCameraToObjects(camera, controls, scene.children[index].children, 1.5)
                     index++
                 }, undefined, function ( error ) {
                     /////////////////////////////////////////////////////////
@@ -110,7 +110,7 @@
         console.log(activeScene)
         if(firedOnce) {
             // fitting camera to view
-            fitCameraToObjects(camera, controls, [scene.children[activeScene].children[2]], 1.5)
+            fitCameraToObjects(camera, controls, scene.children[activeScene].children, 1.5)
             // showing only objects from selected the scene
             scene.children.forEach((scene, i) => {
                 if(i == activeScene) { scene.visible = true; return} 
@@ -128,6 +128,11 @@
     const box = new THREE.Box3();
 
     function fitCameraToObjects(camera, controls, objects, fitOffset = 1.2) {
+        // filtering out the ENV objects
+        objects = objects.filter((object) => {
+            return !object.name.includes("ENV")
+        })
+
         box.makeEmpty();
         for(const object of objects) {
             box.expandByObject(object);
