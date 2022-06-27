@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import { activeScene, sceneThumbnails } from "./stores"
+    import { activeScene, sceneThumbnails } from "../store"
     import mahmoud_logo from "../assets/mahmoud_logo.png"
 
     export let images = []
@@ -8,8 +8,6 @@
 
     // running this function when the sceneThumbnails global variable changes
     sceneThumbnails.subscribe(value => {
-        console.log("wooow")
-        console.log(value)
         images  = value
     })
 
@@ -70,7 +68,6 @@
     }
     
     .scene_thumbnail {
-        background-color: white;
         box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.075);
         object-fit: cover;
         aspect-ratio: 1;
@@ -78,6 +75,7 @@
         height: 100px;
         transition: 0.5s;
         cursor: pointer;
+        border: 5px transparent solid;
     }
 
     .scene_thumbnail:hover {
@@ -86,6 +84,7 @@
 
     .active {
         transform: scale(1.1);
+        border: 5px var(--main-color-light) solid;
     }
 
 </style>

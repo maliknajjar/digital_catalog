@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-    import { activeScene, sceneThumbnails } from "./stores"
+    import { activeScene, sceneThumbnails } from "../store"
 
     import * as THREE from 'three';
     import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
@@ -9,6 +9,7 @@
 
     // global variables
     let renderer
+    let controls
 
     // instantiating the scene
     const scene = new THREE.Scene();
@@ -45,7 +46,7 @@
         renderer.setSize( window.innerWidth, window.innerHeight );
 
         // adding orbit controls
-        const controls = new OrbitControls( camera, renderer.domElement );
+        controls = new OrbitControls( camera, renderer.domElement );
 
         // taking a picture of the every scene in the app and putting it in the scenes thumbnail
         let isActive = true
@@ -56,6 +57,8 @@
         const loader = new GLTFLoader();
         loader.load( `src/3D_Scenes/0.glb`, function ( gltf ) {
             scene.add(gltf.scene)
+            // fitting camera to view
+            fitCameraToObjects(camera, controls, [scene.children[0].children[2]], 1.5)
         }, undefined, function ( error ) {
             console.error( error );
         } );
@@ -74,17 +77,21 @@
                     scene.children[index - 1].visible = false
                     // adding the scene
                     scene.add(gltf.scene)
+                    // fitting camera to view
+                    fitCameraToObjects(camera, controls, [scene.children[index].children[2]], 1.5)
                     index++
                 }, undefined, function ( error ) {
+                    /////////////////////////////////////////////////////////
+                    // this is code that runs when all scenes are imported //
+                    /////////////////////////////////////////////////////////
+                    // displaying error
                     console.error( error );
+                    // this is to end the loop
                     isActive = false
                     // setting thumbnails from saved images
                     sceneThumbnails.set(renderImages)
                     // setting the first scene to be the active scene
-                    scene.children.forEach((scene, i) => {
-                        if(i == 0) { scene.visible = true; return } 
-                        scene.visible = false
-                    });
+                    activeScene.set(0)
                 } );
             }
         };
@@ -96,14 +103,60 @@
         // invoking the animation loop 
         animate()
 	});
-
+    
     // changing the scene when the activeScene variable changes
+    let firedOnce = false
     activeScene.subscribe(activeScene => {
-        scene.children.forEach((scene, i) => {
-            if(i == activeScene) { scene.visible = true; return} 
-            scene.visible = false
-        });
+        console.log(activeScene)
+        if(firedOnce) {
+            // fitting camera to view
+            fitCameraToObjects(camera, controls, [scene.children[activeScene].children[2]], 1.5)
+            // showing only objects from selected the scene
+            scene.children.forEach((scene, i) => {
+                if(i == activeScene) { scene.visible = true; return} 
+                scene.visible = false
+            });
+        }
+        firedOnce = true
     })
+    
+    //////////////////////////////////////////
+    //               FUNCTIONS              //
+    //////////////////////////////////////////
+    const size = new THREE.Vector3();
+    const center = new THREE.Vector3();
+    const box = new THREE.Box3();
+
+    function fitCameraToObjects(camera, controls, objects, fitOffset = 1.2) {
+        box.makeEmpty();
+        for(const object of objects) {
+            box.expandByObject(object);
+        }
+        
+        box.getSize(size);
+        box.getCenter(center );
+        
+        const maxSize = Math.max(size.x, size.y, size.z);
+        const fitHeightDistance = maxSize / (2 * Math.atan(Math.PI * camera.fov / 360));
+        const fitWidthDistance = fitHeightDistance / camera.aspect;
+        const distance = fitOffset * Math.max(fitHeightDistance, fitWidthDistance);
+        
+        const direction = controls.target.clone()
+            .sub(camera.position)
+            .normalize()
+            .multiplyScalar(distance);
+
+        controls.maxDistance = distance * 10;
+        controls.target.copy(center);
+        
+        camera.near = distance / 100;
+        camera.far = distance * 100;
+        camera.updateProjectionMatrix();
+
+        camera.position.copy(controls.target).sub(direction);
+        
+        controls.update();
+    }
 </script>
 
 <canvas class="mainCanvas"></canvas>
