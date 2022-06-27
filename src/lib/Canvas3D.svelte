@@ -10,6 +10,7 @@
     // global variables
     let renderer
     let controls
+    let tree = [[]]
 
     // instantiating the scene
     const scene = new THREE.Scene();
@@ -92,6 +93,8 @@
                     sceneThumbnails.set(renderImages)
                     // setting the first scene to be the active scene
                     activeScene.set(0)
+                    // invoking the initClassSystem
+                    initClassSystem()
                 } );
             }
         };
@@ -107,7 +110,6 @@
     // changing the scene when the activeScene variable changes
     let firedOnce = false
     activeScene.subscribe(activeScene => {
-        console.log(activeScene)
         if(firedOnce) {
             // fitting camera to view
             fitCameraToObjects(camera, controls, scene.children[activeScene].children)
@@ -123,6 +125,23 @@
     //////////////////////////////////////////
     //               FUNCTIONS              //
     //////////////////////////////////////////
+    function initClassSystem() {
+        // organising objects of every scene 
+        scene.children.forEach((scene, i) => {
+            tree[i] = []
+            scene.children.forEach((object, e) => {
+                console.log(object.name)
+                let seperated = object.name.split("-")
+                tree[i][e] = {
+                    name: seperated[0],
+                    class: seperated[1],
+                    image: "woow",
+                }
+            });
+            console.log(tree)
+        });
+    }
+    
     const size = new THREE.Vector3();
     const center = new THREE.Vector3();
     const box = new THREE.Box3();
