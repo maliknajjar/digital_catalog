@@ -10,7 +10,18 @@
     // global variables
     let renderer
     let controls
-    let tree = [[]]
+    let tree = []
+    // let tree = [
+    //     {
+    //         "ass": [
+    //             {
+    //                 name: "test",
+    //                 image: "test",
+    //                 refrence: "test",
+    //             }
+    //         ],
+    //     }
+    // ]
 
     // instantiating the scene
     const scene = new THREE.Scene();
@@ -126,20 +137,28 @@
     //               FUNCTIONS              //
     //////////////////////////////////////////
     function initClassSystem() {
-        // organising objects of every scene 
+        // organising classes and objects of every scene into one global variable {tree}
         scene.children.forEach((scene, i) => {
-            tree[i] = []
+            let obj = {}
             scene.children.forEach((object, e) => {
-                console.log(object.name)
                 let seperated = object.name.split("-")
-                tree[i][e] = {
-                    name: seperated[0],
-                    class: seperated[1],
-                    image: "woow",
-                }
+                if(!seperated[1]) return
+                obj[seperated[1]] = []
+                scene.children.forEach((object, e) => {
+                    let sep = object.name.split("-")
+                    if(sep[1] != seperated[1]) return
+                    // taking the picture of class objects here
+                    
+                    obj[sep[1]].push({
+                        name: sep[0],
+                        image: "none",
+                        refrence: object
+                    })
+                })
             });
-            console.log(tree)
+            tree.push(obj)
         });
+        console.log(tree)
     }
     
     const size = new THREE.Vector3();
