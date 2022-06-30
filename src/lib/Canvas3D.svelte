@@ -11,17 +11,7 @@
     let renderer
     let controls
     let tree = []
-    // let tree = [
-    //     {
-    //         "ass": [
-    //             {
-    //                 name: "test",
-    //                 image: "test",
-    //                 refrence: "test",
-    //             }
-    //         ],
-    //     }
-    // ]
+    let theActiveScene = 0
 
     // instantiating the scene
     const scene = new THREE.Scene();
@@ -50,6 +40,8 @@
         const mainCanvas = document.querySelector(".mainCanvas")
         renderer = new THREE.WebGLRenderer({
             antialias: true,
+            // this option makes the app able to store an image from the renderer
+            preserveDrawingBuffer: true,
             canvas: mainCanvas
         });
         renderer.outputEncoding = THREE.sRGBEncoding
@@ -125,40 +117,24 @@
             // fitting camera to view
             fitCameraToObjects(camera, controls, scene.children[activeScene].children)
             // showing only objects from selected the scene
-            scene.children.forEach((scene, i) => {
-                if(i == activeScene) { scene.visible = true; return} 
-                scene.visible = false
-            });
+            switchScene(activeScene)
         }
         firedOnce = true
+        theActiveScene = activeScene
     })
     
     //////////////////////////////////////////
     //               FUNCTIONS              //
     //////////////////////////////////////////
-    function initClassSystem() {
-        // organising classes and objects of every scene into one global variable {tree}
+    function switchScene(sceneID) {
         scene.children.forEach((scene, i) => {
-            let obj = {}
-            scene.children.forEach((object, e) => {
-                let seperated = object.name.split("-")
-                if(!seperated[1]) return
-                obj[seperated[1]] = []
-                scene.children.forEach((object, e) => {
-                    let sep = object.name.split("-")
-                    if(sep[1] != seperated[1]) return
-                    // taking the picture of class objects here
-                    
-                    obj[sep[1]].push({
-                        name: sep[0],
-                        image: "none",
-                        refrence: object
-                    })
-                })
-            });
-            tree.push(obj)
+            if(i == sceneID) { scene.visible = true; return} 
+            scene.visible = false
         });
-        console.log(tree)
+    }
+
+    function initClassSystem() {
+        console.log("starting class systeme")
     }
     
     const size = new THREE.Vector3();

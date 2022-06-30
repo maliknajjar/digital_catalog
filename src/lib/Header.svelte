@@ -11,7 +11,7 @@
         images  = value
     })
 
-    // the function that changs the scene when clicking on a scene thumbnail
+    // the function that changes the scene when clicking on a scene thumbnail
     function changeActiveScene(sceneIndex) {
         activeScene.set(sceneIndex)
         scaledThumbnailIndex = sceneIndex
