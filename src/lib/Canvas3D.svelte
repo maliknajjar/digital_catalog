@@ -10,8 +10,7 @@
     // global variables
     let renderer
     let controls
-    let tree = []
-    let theActiveScene = 0
+    let theActiveScene
 
     // instantiating the scene
     const scene = new THREE.Scene();
@@ -113,6 +112,7 @@
     // changing the scene when the activeScene variable changes
     let firedOnce = false
     activeScene.subscribe(activeScene => {
+        
         if(firedOnce) {
             // fitting camera to view
             fitCameraToObjects(camera, controls, scene.children[activeScene].children)
@@ -121,6 +121,7 @@
         }
         firedOnce = true
         theActiveScene = activeScene
+        
     })
     
     //////////////////////////////////////////
@@ -133,8 +134,20 @@
         });
     }
 
-    function initClassSystem() {
+    async function initClassSystem() {
         console.log("starting class systeme")
+        let theScenes = scene.children
+        for (let sceneIndex = 0; sceneIndex < theScenes.length; sceneIndex++) {
+            let sceneObjects = theScenes[sceneIndex].children
+            console.log("scene index is: " + sceneIndex)
+            for (let index = 0; index < sceneObjects.length; index++) {
+                const theObject = sceneObjects[index];
+                if(theObject.name.includes("-")){
+                    console.log(theObject.name)
+                    await sleep(2000)
+                }
+            }
+        }
     }
     
     const size = new THREE.Vector3();
@@ -175,6 +188,13 @@
         camera.position.copy(controls.target).sub(direction);
         
         controls.update();
+    }
+
+    /*
+        this function mimics the sleep function in python or c (make sure to use it in an async function and add await before the functin)
+    */
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
     }
 </script>
 
