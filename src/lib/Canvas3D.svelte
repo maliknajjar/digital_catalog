@@ -135,22 +135,39 @@
     }
 
     async function initClassSystem() {
+        let tree = []
         console.log("starting class systeme")
         let theScenes = scene.children
         for (let sceneIndex = 0; sceneIndex < theScenes.length; sceneIndex++) {
             let sceneObjects = theScenes[sceneIndex].children
+            let classes = {}
             for (let index = 0; index < sceneObjects.length; index++) {
                 const theObject = sceneObjects[index];
                 if(theObject.name.includes("-")){
-                    console.log(theObject.name)
-                    showOnlyObject(theObject)
-                    await sleep(2000)
+                    showOnlyOneObject(theObject)
+                    fitCameraToObjects(camera, controls, [theObject])
+                    // saving the picture of the tree variable
+                    let objectInfo = {}
+                    const objectSplitted = theObject.name.split("-")
+                    objectInfo["name"] = objectSplitted[0]
+                    objectInfo["class"] = objectSplitted[1]
+                    objectInfo["image"] = renderer.domElement.toDataURL()
+                    objectInfo["refrence"] = theObject
+                    if(!Array.isArray(classes[objectSplitted[1]])) classes[objectSplitted[1]] = []
+                    classes[objectSplitted[1]].push(objectInfo)
+                    await sleep(500)
                 }
             }
+            tree.push(classes)
         }
+        console.log(tree)
     }
 
-    function showOnlyObject(object) {
+    /**
+     * this function hides every thing and shows only one specific object
+    */
+    function showOnlyOneObject(object) {
+        // hide all things in the scene
         scene.children.forEach(scenes => {
             scenes.visible = false
         })
@@ -158,6 +175,7 @@
         object.parent.children.forEach((object) => {
             object.visible = false
         });
+        // show only the wanted object
         object.visible = true
     }
     
