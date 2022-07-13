@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-    import { activeScene, sceneThumbnails } from "../store"
+    import { activeScene, sceneThumbnails, classTree } from "../store"
 
     import * as THREE from 'three';
     import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
@@ -11,6 +11,7 @@
     let renderer
     let controls
     let theActiveScene
+    let tree = []
 
     // instantiating the scene
     const scene = new THREE.Scene();
@@ -135,7 +136,6 @@
     }
 
     async function initClassSystem() {
-        let tree = []
         console.log("starting class systeme")
         let theScenes = scene.children
         for (let sceneIndex = 0; sceneIndex < theScenes.length; sceneIndex++) {
@@ -158,9 +158,17 @@
                     await sleep(500)
                 }
             }
+            // turning all objects' visibility back into true
+            for (let index = 0; index < sceneObjects.length; index++) {
+                const theObject = sceneObjects[index];
+                theObject.visible = true
+            }
             tree.push(classes)
         }
-        console.log(tree)
+        classTree.set(tree)
+        // switching back to the first scene
+        switchScene(0)
+        fitCameraToObjects(camera, controls, scene.children[0].children)
     }
 
     /**

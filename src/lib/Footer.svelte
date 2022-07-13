@@ -1,14 +1,32 @@
 <script lang="ts">
+    import { classTree, activeScene } from "../store"
 
+    let Tree;
+    let isFired = false;
+    activeScene.subscribe((value) => {
+        if (isFired == false) {
+            isFired = true
+        } else {
+            console.log(Tree[value])
+        }
+    })
+
+    classTree.subscribe((value) => {
+        console.log("this log is from the footer")
+        Tree = value
+    })
 </script>
   
 <footer>
     <div class="outer_navigation_control">
         <div class="inner_navigation_control">
-            <div>Base cabinets</div>
-            <div>Wall cabinets</div>
-            <div>Worktops</div>
-            <div>Sinks</div>
+            <!-- these are some examples of the classes -->
+            <!-- 
+                <div>Base cabinets</div>
+                <div>Wall cabinets</div>
+                <div>Worktops</div>
+                <div>Sinks</div> 
+            -->
         </div>
     </div>
     <div class="outer_piece_propreties_control">
