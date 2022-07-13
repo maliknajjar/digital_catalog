@@ -139,15 +139,26 @@
         let theScenes = scene.children
         for (let sceneIndex = 0; sceneIndex < theScenes.length; sceneIndex++) {
             let sceneObjects = theScenes[sceneIndex].children
-            console.log("scene index is: " + sceneIndex)
             for (let index = 0; index < sceneObjects.length; index++) {
                 const theObject = sceneObjects[index];
                 if(theObject.name.includes("-")){
                     console.log(theObject.name)
+                    showOnlyObject(theObject)
                     await sleep(2000)
                 }
             }
         }
+    }
+
+    function showOnlyObject(object) {
+        scene.children.forEach(scenes => {
+            scenes.visible = false
+        })
+        object.parent.visible = true
+        object.parent.children.forEach((object) => {
+            object.visible = false
+        });
+        object.visible = true
     }
     
     const size = new THREE.Vector3();
