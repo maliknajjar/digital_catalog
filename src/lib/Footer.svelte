@@ -2,18 +2,29 @@
     import { classTree, activeScene } from "../store"
 
     let Tree;
+    let objectsClasses = [];
+    let currentObjects;
+    let currentClass;
+
     let isFired = false;
     activeScene.subscribe((value) => {
         if (isFired == false) {
             isFired = true
         } else {
-            console.log(Tree[value])
+            // add code here that happens when the scene changes
+            // console.log(Object.keys(Tree[value]))
+            if (Tree[value] == undefined) return
+            objectsClasses = Object.keys(Tree[value])
+            currentObjects = Tree[value]
+            currentClass = objectsClasses[0]
+            console.log(currentClass)
         }
     })
 
     classTree.subscribe((value) => {
-        console.log("this log is from the footer")
         Tree = value
+        if (Tree[0] == undefined) return
+        objectsClasses = Object.keys(Tree[0])
     })
 </script>
   
@@ -21,12 +32,9 @@
     <div class="outer_navigation_control">
         <div class="inner_navigation_control">
             <!-- these are some examples of the classes -->
-            <!-- 
-                <div>Base cabinets</div>
-                <div>Wall cabinets</div>
-                <div>Worktops</div>
-                <div>Sinks</div> 
-            -->
+            {#each objectsClasses as ObjectsClasse}
+                <div>{ObjectsClasse}</div>
+            {/each}
         </div>
     </div>
     <div class="outer_piece_propreties_control">

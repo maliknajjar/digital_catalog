@@ -94,8 +94,6 @@
                     isActive = false
                     // setting thumbnails from saved images
                     sceneThumbnails.set(renderImages)
-                    // setting the first scene to be the active scene
-                    activeScene.set(0)
                     // invoking the initClassSystem
                     initClassSystem()
                 } );
@@ -115,10 +113,10 @@
     activeScene.subscribe(activeScene => {
         
         if(firedOnce) {
-            // fitting camera to view
-            fitCameraToObjects(camera, controls, scene.children[activeScene].children)
             // showing only objects from selected the scene
             switchScene(activeScene)
+            // fitting camera to view
+            fitCameraToObjects(camera, controls, scene.children[activeScene].children)
         }
         firedOnce = true
         theActiveScene = activeScene
@@ -167,8 +165,7 @@
         }
         classTree.set(tree)
         // switching back to the first scene
-        switchScene(0)
-        fitCameraToObjects(camera, controls, scene.children[0].children)
+        activeScene.set(0)
     }
 
     /**
