@@ -26,8 +26,13 @@
         objectsClasses = Object.keys(Tree[0])
         currentClass = objectsClasses[0]
         currentObjects = Tree[0]
-        console.log(currentObjects[currentClass])
     })
+
+    function changeClass(theClass) {
+        if(theClass == currentClass) return
+        console.log("the changeClass function is fired")
+        currentClass = theClass
+    }
 </script>
   
 <footer>
@@ -35,7 +40,7 @@
         <div class="inner_navigation_control">
             <!-- these are some examples of the classes -->
             {#each objectsClasses as objectsClasse}
-                <div style="{objectsClasse == currentClass ? "color: black;" : ""}">{objectsClasse}</div>
+                <div on:click={() => changeClass(objectsClasse)} style="cursor: pointer;{objectsClasse == currentClass ? "color: black;" : ""}">{objectsClasse}</div>
             {/each}
         </div>
     </div>
@@ -86,7 +91,7 @@
         font-weight: bolder;
         color: var(--unselected-font-color);
     }
-    
+
     .inner_piece_propreties_control {
         overflow: hidden;
         display: flex;
@@ -108,7 +113,12 @@
         object-fit: cover;
     }
 
+    .selectedClass {
+        color: black;
+    }
+
     .propreties_control_thumbnail:hover {
         transform: scale(1.1);
     }
+
 </style>
