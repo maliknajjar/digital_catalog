@@ -135,6 +135,7 @@
 
     async function initClassSystem() {
         console.log("starting class systeme")
+        let timeToWait = 100
         let theScenes = scene.children
         for (let sceneIndex = 0; sceneIndex < theScenes.length; sceneIndex++) {
             let sceneObjects = theScenes[sceneIndex].children
@@ -149,11 +150,11 @@
                     const objectSplitted = theObject.name.split("-")
                     objectInfo["name"] = objectSplitted[0]
                     objectInfo["class"] = objectSplitted[1]
+                    await sleep(timeToWait)
                     objectInfo["image"] = renderer.domElement.toDataURL()
                     objectInfo["refrence"] = theObject
                     if(!Array.isArray(classes[objectSplitted[1]])) classes[objectSplitted[1]] = []
                     classes[objectSplitted[1]].push(objectInfo)
-                    await sleep(500)
                 }
             }
             // turning all objects' visibility back into true
@@ -163,6 +164,7 @@
             }
             tree.push(classes)
         }
+        // console.log(tree[0]["top"][0]["image"])
         classTree.set(tree)
         // switching back to the first scene
         activeScene.set(0)

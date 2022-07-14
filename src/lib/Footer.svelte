@@ -3,8 +3,8 @@
 
     let Tree;
     let objectsClasses = [];
-    let currentObjects;
-    let currentClass;
+    let currentObjects = {};
+    let currentClass = "";
 
     let isFired = false;
     activeScene.subscribe((value) => {
@@ -17,14 +17,16 @@
             objectsClasses = Object.keys(Tree[value])
             currentObjects = Tree[value]
             currentClass = objectsClasses[0]
-            console.log(currentClass)
         }
     })
-
+    
     classTree.subscribe((value) => {
         Tree = value
         if (Tree[0] == undefined) return
         objectsClasses = Object.keys(Tree[0])
+        currentClass = objectsClasses[0]
+        currentObjects = Tree[0]
+        console.log(currentObjects[currentClass])
     })
 </script>
   
@@ -32,16 +34,24 @@
     <div class="outer_navigation_control">
         <div class="inner_navigation_control">
             <!-- these are some examples of the classes -->
-            {#each objectsClasses as ObjectsClasse}
-                <div>{ObjectsClasse}</div>
+            {#each objectsClasses as objectsClasse}
+                <div style="{objectsClasse == currentClass ? "color: black;" : ""}">{objectsClasse}</div>
             {/each}
         </div>
     </div>
     <div class="outer_piece_propreties_control">
         <div class="inner_piece_propreties_control">
-            <div class="propreties_control_thumbnail"></div>
-            <div class="propreties_control_thumbnail"></div>
-            <div class="propreties_control_thumbnail"></div>
+            {#if currentClass == ""}
+                loading
+            {:else}
+                {#if Array.isArray(currentObjects[currentClass])}
+                    {#each currentObjects[currentClass] as object}
+                        <img class="propreties_control_thumbnail" alt="thumbnail" src="{object.image}">  
+                    {/each}
+                {:else}
+                    there is no classes
+                {/if}
+            {/if}
         </div>
     </div>
 </footer>
@@ -94,6 +104,8 @@
         height: 90px;
         transition: 0.5s;
         cursor: pointer;
+        border: none;
+        object-fit: cover;
     }
 
     .propreties_control_thumbnail:hover {
