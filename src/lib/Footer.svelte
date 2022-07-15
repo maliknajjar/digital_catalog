@@ -1,10 +1,9 @@
 <script lang="ts">
-    import { classTree, activeScene } from "../store"
+    import { classTree, activeScene, currentClassIndex, currentClass } from "../store"
 
     let Tree;
     let objectsClasses = [];
     let currentObjects = {};
-    let currentClass = "";
 
     let isFired = false;
     activeScene.subscribe((value) => {
@@ -16,7 +15,7 @@
             if (Tree[value] == undefined) return
             objectsClasses = Object.keys(Tree[value])
             currentObjects = Tree[value]
-            currentClass = objectsClasses[0]
+            currentClass.set(objectsClasses[0])
         }
     })
     
@@ -24,14 +23,14 @@
         Tree = value
         if (Tree[0] == undefined) return
         objectsClasses = Object.keys(Tree[0])
-        currentClass = objectsClasses[0]
+        currentClass.set(objectsClasses[0])
         currentObjects = Tree[0]
     })
 
     function changeClass(theClass) {
         if(theClass == currentClass) return
         console.log("the changeClass function is fired")
-        currentClass = theClass
+        currentClass.set(theClass)
     }
 </script>
   
@@ -40,18 +39,18 @@
         <div class="inner_navigation_control">
             <!-- these are some examples of the classes -->
             {#each objectsClasses as objectsClasse}
-                <div on:click={() => changeClass(objectsClasse)} style="cursor: pointer;{objectsClasse == currentClass ? "color: black;" : ""}">{objectsClasse}</div>
+                <div on:click={() => {changeClass(objectsClasse); currentClassIndex.set(0)}} class="{objectsClasse == $currentClass ? "selectedClass" : ""}" style="cursor: pointer;">{objectsClasse}</div>
             {/each}
         </div>
     </div>
     <div class="outer_piece_propreties_control">
         <div class="inner_piece_propreties_control">
-            {#if currentClass == ""}
+            {#if $currentClass == ""}
                 loading
             {:else}
-                {#if Array.isArray(currentObjects[currentClass])}
-                    {#each currentObjects[currentClass] as object}
-                        <img class="propreties_control_thumbnail" alt="thumbnail" src="{object.image}">  
+                {#if Array.isArray(currentObjects[$currentClass])}
+                    {#each currentObjects[$currentClass] as object, i}
+                        <img on:click={() => {currentClassIndex.set(i)}} class="propreties_control_thumbnail" style="{$currentClassIndex == i ? "transform: scale(1.1);" : ""}" alt="thumbnail" src="{object.image}">  
                     {/each}
                 {:else}
                     there is no classes
@@ -114,7 +113,8 @@
     }
 
     .selectedClass {
-        color: black;
+        color: rgb(63, 63, 63);
+        cursor: pointer;
     }
 
     .propreties_control_thumbnail:hover {

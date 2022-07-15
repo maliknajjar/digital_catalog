@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-    import { activeScene, sceneThumbnails, classTree } from "../store"
+    import { activeScene, sceneThumbnails, classTree, currentClassIndex, currentClass } from "../store"
 
     import * as THREE from 'three';
     import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
@@ -121,6 +121,12 @@
         firedOnce = true
         theActiveScene = activeScene
         
+    })
+
+    currentClassIndex.subscribe((value) => {
+        if(tree[theActiveScene] == undefined) return
+        // show only one object from one class
+        console.log(tree[theActiveScene][$currentClass])
     })
     
     //////////////////////////////////////////

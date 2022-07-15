@@ -5,3 +5,7 @@ export const activeScene = writable(1);
 export const sceneThumbnails = writable([]);
 
 export const classTree = writable([]);
+
+export const currentClass = writable("");
+
+export const currentClassIndex = writable(0);
