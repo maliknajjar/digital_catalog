@@ -129,7 +129,6 @@
         let objects = tree[theActiveScene][$currentClass]
         if (objects == undefined) return 
         let object = tree[theActiveScene][$currentClass][value.index]
-        console.log(object.refrence.uuid)
         objects.forEach(element => {
             if (element.refrence.uuid == object.refrence.uuid) {
                 element.refrence.visible = true
@@ -151,7 +150,6 @@
     }
 
     async function initClassSystem() {
-        console.log("starting class systeme")
         let timeToWait = 100
         let theScenes = scene.children
         for (let sceneIndex = 0; sceneIndex < theScenes.length; sceneIndex++) {

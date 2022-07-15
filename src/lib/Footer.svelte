@@ -11,7 +11,6 @@
             isFired = true
         } else {
             // add code here that happens when the scene changes
-            // console.log(Object.keys(Tree[value]))
             if (Tree[value] == undefined) return
             objectsClasses = Object.keys(Tree[value])
             currentObjects = Tree[value]
@@ -29,7 +28,6 @@
 
     function changeClass(theClass) {
         if(theClass == currentClass) return
-        console.log("the changeClass function is fired")
         currentClass.set(theClass)
     }
 </script>
