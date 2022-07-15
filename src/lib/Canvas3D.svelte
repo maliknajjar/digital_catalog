@@ -126,7 +126,18 @@
     currentClassIndex.subscribe((value) => {
         if(tree[theActiveScene] == undefined) return
         // show only one object from one class
-        console.log(tree[theActiveScene][$currentClass])
+        let objects = tree[theActiveScene][$currentClass]
+        if (objects == undefined) return 
+        let object = tree[theActiveScene][$currentClass][value.index]
+        console.log(object.refrence.uuid)
+        objects.forEach(element => {
+            if (element.refrence.uuid == object.refrence.uuid) {
+                element.refrence.visible = true
+                return
+            } else {
+                element.refrence.visible = false
+            }
+        });
     })
     
     //////////////////////////////////////////
@@ -170,7 +181,15 @@
             }
             tree.push(classes)
         }
-        // console.log(tree[0]["top"][0]["image"])
+        // making only the first classed object visible
+        tree.forEach((element) => {
+            Object.values(element).forEach((object: Array<any>) => {
+                object.forEach((obj, i) => {
+                    if (i == 0) obj.refrence.visible = true
+                    else obj.refrence.visible = false
+                });
+            })
+        })
         classTree.set(tree)
         // switching back to the first scene
         activeScene.set(0)

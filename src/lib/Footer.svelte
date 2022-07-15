@@ -39,7 +39,7 @@
         <div class="inner_navigation_control">
             <!-- these are some examples of the classes -->
             {#each objectsClasses as objectsClasse}
-                <div on:click={() => {changeClass(objectsClasse); currentClassIndex.set(0)}} class="{objectsClasse == $currentClass ? "selectedClass" : ""}" style="cursor: pointer;">{objectsClasse}</div>
+                <div on:click={() => {changeClass(objectsClasse); currentClassIndex.set({index: 0, class: $currentClass})}} class="{objectsClasse == $currentClass ? "selectedClass" : ""}" style="cursor: pointer;">{objectsClasse}</div>
             {/each}
         </div>
     </div>
@@ -50,7 +50,7 @@
             {:else}
                 {#if Array.isArray(currentObjects[$currentClass])}
                     {#each currentObjects[$currentClass] as object, i}
-                        <img on:click={() => {currentClassIndex.set(i)}} class="propreties_control_thumbnail" style="{$currentClassIndex == i ? "transform: scale(1.1);" : ""}" alt="thumbnail" src="{object.image}">  
+                        <img on:click={() => {currentClassIndex.set({index: i, class: $currentClass})}} class="propreties_control_thumbnail" style="{$currentClassIndex.index == i ? "transform: scale(1.1);" : ""}" alt="thumbnail" src="{object.image}">  
                     {/each}
                 {:else}
                     there is no classes

@@ -8,4 +8,6 @@ export const classTree = writable([]);
 
 export const currentClass = writable("");
 
-export const currentClassIndex = writable(0);
+// you can add an object instead of a number to fix the porblem of app not refreshing
+// you can add index number and class name
+export const currentClassIndex = writable({index: 0, class: ""});
