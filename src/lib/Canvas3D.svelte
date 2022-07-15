@@ -150,7 +150,7 @@
     }
 
     async function initClassSystem() {
-        let timeToWait = 100
+        let timeToWait = 25
         let theScenes = scene.children
         for (let sceneIndex = 0; sceneIndex < theScenes.length; sceneIndex++) {
             let sceneObjects = theScenes[sceneIndex].children

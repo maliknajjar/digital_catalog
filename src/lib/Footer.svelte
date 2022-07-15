@@ -32,7 +32,7 @@
     }
 </script>
   
-<footer>
+<footer class="bolder">
     <div class="outer_navigation_control">
         <div class="inner_navigation_control">
             <!-- these are some examples of the classes -->
@@ -51,7 +51,7 @@
                         <img on:click={() => {currentClassIndex.set({index: i, class: $currentClass})}} class="propreties_control_thumbnail" style="{$currentClassIndex.index == i ? "transform: scale(1.1);" : ""}" alt="thumbnail" src="{object.image}">  
                     {/each}
                 {:else}
-                    there is no classes
+                    there are no classes
                 {/if}
             {/if}
         </div>
@@ -66,6 +66,10 @@
         position: absolute;
         bottom: 0;
         width: 100%;
+    }
+
+    .bolder {
+        font-weight: bolder;
     }
     
     .outer_navigation_control {
@@ -111,7 +115,7 @@
     }
 
     .selectedClass {
-        color: rgb(63, 63, 63);
+        color: var(--selected-font-color);
         cursor: pointer;
     }
 
