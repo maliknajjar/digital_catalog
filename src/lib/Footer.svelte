@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { classTree, activeScene, currentClassIndex, currentClass } from "../store"
+    import { classTree, activeScene, everyClassesIndex, currentClass } from "../store"
 
     let Tree;
     let objectsClasses = [];
@@ -37,7 +37,7 @@
         <div class="inner_navigation_control">
             <!-- these are some examples of the classes -->
             {#each objectsClasses as objectsClasse}
-                <div on:click={() => {changeClass(objectsClasse); currentClassIndex.set({index: 0, class: $currentClass})}} class="{objectsClasse == $currentClass ? "selectedClass" : ""}" style="cursor: pointer;">{objectsClasse}</div>
+                <div on:click={() => {changeClass(objectsClasse) }} class="{objectsClasse == $currentClass ? "selectedClass" : ""}" style="cursor: pointer;">{objectsClasse}</div>
             {/each}
         </div>
     </div>
@@ -48,7 +48,7 @@
             {:else}
                 {#if Array.isArray(currentObjects[$currentClass])}
                     {#each currentObjects[$currentClass] as object, i}
-                        <img on:click={() => {currentClassIndex.set({index: i, class: $currentClass})}} class="propreties_control_thumbnail" style="{$currentClassIndex.index == i ? "transform: scale(1.1);" : ""}" alt="thumbnail" src="{object.image}">  
+                        <img on:click={() => { $everyClassesIndex[$activeScene][$currentClass] = i }} class="propreties_control_thumbnail" style="{$everyClassesIndex[$activeScene][$currentClass] == i ? "transform: scale(1.1);" : ""}" alt="thumbnail" src="{object.image}">  
                     {/each}
                 {:else}
                     there are no classes

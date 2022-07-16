@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import { activeScene, sceneThumbnails, currentClassIndex, currentClass } from "../store"
+    import { activeScene, sceneThumbnails, everyClassesIndex, currentClass } from "../store"
     import mahmoud_logo from "../assets/mahmoud_logo.png"
 
     export let images = []
@@ -15,7 +15,6 @@
     function changeActiveScene(sceneIndex) {
         activeScene.set(sceneIndex)
         scaledThumbnailIndex = sceneIndex
-        currentClassIndex.set({index: 0, class: $currentClass})
     }
 </script>
   

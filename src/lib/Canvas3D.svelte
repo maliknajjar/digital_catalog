@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-    import { activeScene, sceneThumbnails, classTree, currentClassIndex, currentClass } from "../store"
+    import { activeScene, sceneThumbnails, classTree, everyClassesIndex, currentClass } from "../store"
 
     import * as THREE from 'three';
     import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
@@ -123,12 +123,12 @@
         
     })
 
-    currentClassIndex.subscribe((value) => {
+    everyClassesIndex.subscribe((value) => {
         if(tree[theActiveScene] == undefined) return
         // show only one object from one class
         let objects = tree[theActiveScene][$currentClass]
         if (objects == undefined) return 
-        let object = tree[theActiveScene][$currentClass][value.index]
+        let object = tree[theActiveScene][$currentClass][value[theActiveScene][$currentClass]]
         objects.forEach(element => {
             if (element.refrence.uuid == object.refrence.uuid) {
                 element.refrence.visible = true
@@ -188,6 +188,16 @@
                 });
             })
         })
+        // building the $everyClassesIndex variable
+        tree.forEach((e, sceneIndex) => {
+            let object = {}
+            let keys = Object.keys(e)
+            keys.forEach((key) => {
+                object[key] = 0
+            })
+            $everyClassesIndex[sceneIndex] = object
+        })
+        console.log($everyClassesIndex)
         classTree.set(tree)
         // switching back to the first scene
         activeScene.set(0)
