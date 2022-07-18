@@ -150,6 +150,14 @@
     }
 
     async function initClassSystem() {
+        // adding a geometry to add a background color for every classed object
+        const geometry = new THREE.SphereGeometry(5, 32, 32); // (radius, widthSegments, heightSegments)
+        const material = new THREE.MeshBasicMaterial( {color: 0xffea33, side:THREE.DoubleSide} );
+        const sphere = new THREE.Mesh(geometry, material);
+        sphere.name = "malik"
+        scene.add(sphere);
+        console.log("added the spheare to the scene")
+        
         let timeToWait = 25
         let theScenes = scene.children
         for (let sceneIndex = 0; sceneIndex < theScenes.length; sceneIndex++) {
@@ -159,7 +167,10 @@
                 const theObject = sceneObjects[index];
                 if(theObject.name.includes("-")){
                     showOnlyOneObject(theObject)
-                    fitCameraToObjects(camera, controls, [theObject])
+                    // showing the background again after we made only the classed object visible
+                    sphere.visible = true
+                    console.log(sphere.visible)
+                    fitCameraToObjects(camera, controls, [theObject], 1.5)
                     // saving the picture of the tree variable
                     let objectInfo = {}
                     const objectSplitted = theObject.name.split("-")
@@ -197,7 +208,7 @@
             })
             $everyClassesIndex[sceneIndex] = object
         })
-        console.log($everyClassesIndex)
+        console.log(scene)
         classTree.set(tree)
         // switching back to the first scene
         activeScene.set(0)
