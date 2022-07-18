@@ -30,7 +30,7 @@
     const hdriLoader = new RGBELoader();
     hdriLoader.load('src/hdris/brown_photostudio_01_1k.hdr', (texture) => {
         texture.mapping = THREE.EquirectangularReflectionMapping
-        scene.background = texture
+        // scene.background = texture
         scene.environment = texture
     })
     
