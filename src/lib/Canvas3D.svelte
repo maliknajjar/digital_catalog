@@ -17,7 +17,8 @@
     const scene = new THREE.Scene();
     let objects
     // setting a suitable background color
-    scene.background = new THREE.Color( 0xeeeeee );
+    let bgColor = new THREE.Color( 0xeeeeee );
+    scene.background = bgColor
 
     // adding the camera to the scene
     const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
@@ -150,14 +151,7 @@
     }
 
     async function initClassSystem() {
-        // adding a geometry to add a background color for every classed object
-        const geometry = new THREE.SphereGeometry(5, 32, 32); // (radius, widthSegments, heightSegments)
-        const material = new THREE.MeshBasicMaterial( {color: 0xffea33, side:THREE.DoubleSide} );
-        const sphere = new THREE.Mesh(geometry, material);
-        sphere.name = "malik"
-        scene.add(sphere);
-        console.log("added the spheare to the scene")
-        
+        scene.background = new THREE.Color( 0xffea33 );     // changing the color of the background of the classed object thumbnail
         let timeToWait = 25
         let theScenes = scene.children
         for (let sceneIndex = 0; sceneIndex < theScenes.length; sceneIndex++) {
@@ -168,8 +162,6 @@
                 if(theObject.name.includes("-")){
                     showOnlyOneObject(theObject)
                     // showing the background again after we made only the classed object visible
-                    sphere.visible = true
-                    console.log(sphere.visible)
                     fitCameraToObjects(camera, controls, [theObject], 1.5)
                     // saving the picture of the tree variable
                     let objectInfo = {}
@@ -212,6 +204,8 @@
         classTree.set(tree)
         // switching back to the first scene
         activeScene.set(0)
+        // retrieving the original background color
+        scene.background = bgColor
     }
 
     /**
