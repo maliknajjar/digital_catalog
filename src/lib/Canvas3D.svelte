@@ -151,7 +151,7 @@
     }
 
     async function initClassSystem() {
-        scene.background = new THREE.Color( 0xffea33 );     // changing the color of the background of the classed object thumbnail
+        scene.background = new THREE.Color( 0xfffc5e );     // changing the color of the background of the classed object thumbnail
         let timeToWait = 25
         let theScenes = scene.children
         for (let sceneIndex = 0; sceneIndex < theScenes.length; sceneIndex++) {
