@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { classTree, activeScene, everyClassesIndex, currentClass } from "../store"
+    import { classTree, activeScene, everyClassesIndex, currentClass, isUIhidden } from "../store"
 
     let Tree;
     let objectsClasses = [];
@@ -32,29 +32,31 @@
     }
 </script>
   
-<footer class="bolder">
-    {#if Array.isArray(currentObjects[$currentClass])}
-        <div class="outer_navigation_control">
-            <div class="inner_navigation_control">
-                <!-- these are some examples of the classes -->
-                {#each objectsClasses as objectsClasse}
-                    <div on:click={() => {changeClass(objectsClasse) }} class="{objectsClasse == $currentClass ? "selectedClass" : ""}" style="cursor: pointer;">{objectsClasse}</div>
-                {/each}
-            </div>
-        </div>
-        <div class="outer_piece_propreties_control">
-            <div class="inner_piece_propreties_control">
-                {#if $currentClass == ""}
-                    loading
-                {:else}
-                    {#each currentObjects[$currentClass] as object, i}
-                        <img on:click={() => { $everyClassesIndex[$activeScene][$currentClass] = i }} class="propreties_control_thumbnail" style="{$everyClassesIndex[$activeScene][$currentClass] == i ? "transform: scale(1.1);" : ""}" alt="thumbnail" src="{object.image}">  
+{#if !$isUIhidden}
+    <footer class="bolder">
+        {#if Array.isArray(currentObjects[$currentClass])}
+            <div class="outer_navigation_control">
+                <div class="inner_navigation_control">
+                    <!-- these are some examples of the classes -->
+                    {#each objectsClasses as objectsClasse}
+                        <div on:click={() => {changeClass(objectsClasse) }} class="{objectsClasse == $currentClass ? "selectedClass" : ""}" style="cursor: pointer;">{objectsClasse}</div>
                     {/each}
-                {/if}
+                </div>
             </div>
-        </div>
-    {/if}
-</footer>
+            <div class="outer_piece_propreties_control">
+                <div class="inner_piece_propreties_control">
+                    {#if $currentClass == ""}
+                        loading
+                    {:else}
+                        {#each currentObjects[$currentClass] as object, i}
+                            <img on:click={() => { $everyClassesIndex[$activeScene][$currentClass] = i }} class="propreties_control_thumbnail" style="{$everyClassesIndex[$activeScene][$currentClass] == i ? "transform: scale(1.1);" : ""}" alt="thumbnail" src="{object.image}">  
+                        {/each}
+                    {/if}
+                </div>
+            </div>
+        {/if}
+    </footer>
+{/if}
   
 <style>
     footer {
@@ -71,7 +73,7 @@
     }
     
     .outer_navigation_control {
-        background: radial-gradient(var(--main-color) 25%, var(--main-color-very-light) 125%);
+        background: radial-gradient(var(--main-color) 50%, var(--main-color-very-light) 125%);
         padding: 4px;
         padding-bottom: 0px;
     }
@@ -87,7 +89,7 @@
         gap: 25px;
         background-color: white;
         padding: 15px 20px;
-        font-weight: bolder;
+        font-weight: bold;
         color: var(--unselected-font-color);
     }
 

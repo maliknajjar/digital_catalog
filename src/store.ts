@@ -12,3 +12,5 @@ export const currentClass = writable("");
 export const everyClassesIndex = writable([]);
 
 export const isLoading = writable(true);
+
+export const isUIhidden = writable(false);

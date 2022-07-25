@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { activeScene, sceneThumbnails, everyClassesIndex, currentClass } from "../store"
+    import { activeScene, sceneThumbnails, everyClassesIndex, currentClass, isUIhidden } from "../store"
     import mahmoud_logo from "../assets/mahmoud_logo.png"
 
     export let images = []
@@ -15,6 +15,11 @@
         activeScene.set(sceneIndex)
         scaledThumbnailIndex = sceneIndex
     }
+
+    // UI hide toggle handler
+    function uiButtonHandler() {
+        $isUIhidden = !$isUIhidden
+    }
 </script>
   
 <header>
@@ -23,12 +28,17 @@
             <img src={mahmoud_logo} height="27" alt="the logo">
         </div>
     </div>
-    <div class="outer_Objects_part">
-        <div class="inner_Objects_part">
-            {#each images as imageURL, i}
-                <img class="scene_thumbnail {i == scaledThumbnailIndex ? "active" : ""}" alt="scene_image" src={imageURL} on:click={ () => changeActiveScene(i) }>
-            {/each}
+    {#if !$isUIhidden}
+        <div class="outer_Objects_part">
+            <div class="inner_Objects_part">
+                {#each images as imageURL, i}
+                    <img class="scene_thumbnail {i == scaledThumbnailIndex ? "active" : ""}" alt="scene_image" src={imageURL} on:click={ () => changeActiveScene(i) }>
+                {/each}
+            </div>
         </div>
+    {/if}
+    <div class="hideButton">
+        <div on:click={uiButtonHandler} class="theButton">{!$isUIhidden ? "Hide UI" : "Show UI"}</div>
     </div>
 </header>
   
@@ -78,6 +88,22 @@
 
     .active {
         transform: scale(1.15);
+    }
+
+    .hideButton {
+        display: flex;
+        margin: 15px;
+    }
+    
+    .theButton {
+        background-color: white;
+        padding: 10px 15px;
+        color: rgb(26, 26, 26);
+        cursor: pointer;
+    }
+
+    .theButton:hover {
+        background-color: rgb(255, 234, 190);
     }
 
 </style>
