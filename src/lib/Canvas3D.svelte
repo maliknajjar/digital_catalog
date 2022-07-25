@@ -53,6 +53,10 @@
 
         // adding orbit controls
         controls = new OrbitControls( camera, renderer.domElement );
+        
+        // the thing responsible for smooth animation
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.15;
 
         // taking a picture of the every scene in the app and putting it in the scenes thumbnail
         let isActive = true
@@ -105,6 +109,7 @@
         function animate() {
             requestAnimationFrame( animate );
             renderer.render( scene, camera );
+            controls.update();      // only required if controls.enableDamping = true, or if controls.autoRotate = true
         };
         // invoking the animation loop 
         animate()
