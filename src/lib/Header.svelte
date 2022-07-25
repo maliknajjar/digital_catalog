@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { onMount } from "svelte";
     import { activeScene, sceneThumbnails, everyClassesIndex, currentClass } from "../store"
     import mahmoud_logo from "../assets/mahmoud_logo.png"
 
@@ -59,7 +58,7 @@
     }
     
     .inner_Objects_part {
-        overflow: hidden;
+        overflow: auto;
         display: flex;
         justify-content: flex-start;
         gap: 30px;
@@ -75,16 +74,10 @@
         height: 100px;
         transition: 0.5s;
         cursor: pointer;
-        border: 5px transparent solid;
-    }
-
-    .scene_thumbnail:hover {
-        transform: scale(1.1);
     }
 
     .active {
-        transform: scale(1.1);
-        border: 5px var(--main-color-light) solid;
+        transform: scale(1.15);
     }
 
 </style>

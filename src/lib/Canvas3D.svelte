@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-    import { activeScene, sceneThumbnails, classTree, everyClassesIndex, currentClass } from "../store"
+    import { activeScene, sceneThumbnails, classTree, everyClassesIndex, currentClass, isLoading } from "../store"
 
     import * as THREE from 'three';
     import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
@@ -18,6 +18,7 @@
     let objects
     // setting a suitable background color
     let bgColor = new THREE.Color( 0xeeeeee );
+    let classedObjectThumbnailBG = new THREE.Color( 0xffffff )
     scene.background = bgColor
 
     // adding the camera to the scene
@@ -151,7 +152,7 @@
     }
 
     async function initClassSystem() {
-        scene.background = new THREE.Color( 0xfffc5e );     // changing the color of the background of the classed object thumbnail
+        scene.background = classedObjectThumbnailBG;     // changing the color of the background of the classed object thumbnail
         let timeToWait = 25
         let theScenes = scene.children
         for (let sceneIndex = 0; sceneIndex < theScenes.length; sceneIndex++) {
@@ -200,12 +201,12 @@
             })
             $everyClassesIndex[sceneIndex] = object
         })
-        console.log(scene)
         classTree.set(tree)
         // switching back to the first scene
         activeScene.set(0)
         // retrieving the original background color
         scene.background = bgColor
+        isLoading.set(false)
     }
 
     /**

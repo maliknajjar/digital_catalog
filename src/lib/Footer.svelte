@@ -33,29 +33,27 @@
 </script>
   
 <footer class="bolder">
-    <div class="outer_navigation_control">
-        <div class="inner_navigation_control">
-            <!-- these are some examples of the classes -->
-            {#each objectsClasses as objectsClasse}
-                <div on:click={() => {changeClass(objectsClasse) }} class="{objectsClasse == $currentClass ? "selectedClass" : ""}" style="cursor: pointer;">{objectsClasse}</div>
-            {/each}
+    {#if Array.isArray(currentObjects[$currentClass])}
+        <div class="outer_navigation_control">
+            <div class="inner_navigation_control">
+                <!-- these are some examples of the classes -->
+                {#each objectsClasses as objectsClasse}
+                    <div on:click={() => {changeClass(objectsClasse) }} class="{objectsClasse == $currentClass ? "selectedClass" : ""}" style="cursor: pointer;">{objectsClasse}</div>
+                {/each}
+            </div>
         </div>
-    </div>
-    <div class="outer_piece_propreties_control">
-        <div class="inner_piece_propreties_control">
-            {#if $currentClass == ""}
-                loading
-            {:else}
-                {#if Array.isArray(currentObjects[$currentClass])}
+        <div class="outer_piece_propreties_control">
+            <div class="inner_piece_propreties_control">
+                {#if $currentClass == ""}
+                    loading
+                {:else}
                     {#each currentObjects[$currentClass] as object, i}
                         <img on:click={() => { $everyClassesIndex[$activeScene][$currentClass] = i }} class="propreties_control_thumbnail" style="{$everyClassesIndex[$activeScene][$currentClass] == i ? "transform: scale(1.1);" : ""}" alt="thumbnail" src="{object.image}">  
                     {/each}
-                {:else}
-                    there are no classes
                 {/if}
-            {/if}
+            </div>
         </div>
-    </div>
+    {/if}
 </footer>
   
 <style>
@@ -94,7 +92,7 @@
     }
 
     .inner_piece_propreties_control {
-        overflow: hidden;
+        overflow: auto;
         display: flex;
         justify-content: flex-start;
         gap: 30px;
@@ -117,10 +115,6 @@
     .selectedClass {
         color: var(--selected-font-color);
         cursor: pointer;
-    }
-
-    .propreties_control_thumbnail:hover {
-        transform: scale(1.1);
     }
 
 </style>
